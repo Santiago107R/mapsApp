@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, AppState } from 'react-native'
 import React, { useEffect, type PropsWithChildren } from 'react'
 import { usePermissionStore } from '../store/usePermissions'
 import { PermissionStatus } from '@/infrastucture/interfaces/location'
@@ -23,6 +23,22 @@ const PermissionCheckerProvider = ({children}: PropsWithChildren) => {
     }, [])
 
     // TODO: estar pendiente cuando el estado de la aplicacion cambia
+
+    useEffect(() => {
+        
+        const subscription = AppState.addEventListener('change', (nextAppState) => {
+            if (nextAppState === 'active') {
+                checkLocationPermission()
+            }
+
+            
+
+        })
+
+        return () => {
+            subscription.remove()
+        }
+    }, [])
 
     return <>{children}</>
 }
