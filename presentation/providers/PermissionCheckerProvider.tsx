@@ -1,13 +1,13 @@
-import { View, Text, AppState } from 'react-native'
-import React, { useEffect, type PropsWithChildren } from 'react'
-import { usePermissionStore } from '../store/usePermissions'
 import { PermissionStatus } from '@/infrastucture/interfaces/location'
 import { router } from 'expo-router'
+import React, { useEffect, type PropsWithChildren } from 'react'
+import { AppState } from 'react-native'
+import { usePermissionStore } from '../store/usePermissionsStore'
 
-const PermissionCheckerProvider = ({children}: PropsWithChildren) => {
-    
-    const {locationStatus, checkLocationPermission} = usePermissionStore()
-    
+const PermissionCheckerProvider = ({ children }: PropsWithChildren) => {
+
+    const { locationStatus, checkLocationPermission } = usePermissionStore()
+
     useEffect(() => {
 
         if (locationStatus === PermissionStatus.GRANTED) {
@@ -25,13 +25,13 @@ const PermissionCheckerProvider = ({children}: PropsWithChildren) => {
     // TODO: estar pendiente cuando el estado de la aplicacion cambia
 
     useEffect(() => {
-        
+
         const subscription = AppState.addEventListener('change', (nextAppState) => {
             if (nextAppState === 'active') {
                 checkLocationPermission()
             }
 
-            
+
 
         })
 

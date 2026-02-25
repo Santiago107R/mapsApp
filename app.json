@@ -9,9 +9,17 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
-    },
+      "config": {
+        "googleMapsApiKey": "api key (no la tengo porque google cloud me pide tarjeta)"
+        },
+        "supportsTablet": true
+      },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "api key (no la tengo porque google cloud me pide tarjeta)"
+        }
+      },
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -19,7 +27,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.santiqq.mapsapp"
     },
     "web": {
       "output": "static",

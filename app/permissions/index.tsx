@@ -1,8 +1,8 @@
 import { ThemedText } from '@/presentation/components/shared/themed-text'
 import ThemedPressable from '@/presentation/components/shared/ThemedPressable'
-import { usePermissionStore } from '@/presentation/store/usePermissions'
+import { usePermissionStore } from '@/presentation/store/usePermissionsStore'
 import React from 'react'
-import { Pressable, Text, View } from 'react-native'
+import { View } from 'react-native'
 
 const PermissionScreen = () => {
 

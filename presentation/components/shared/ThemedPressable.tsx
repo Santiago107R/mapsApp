@@ -1,4 +1,4 @@
-import { View, Text, Pressable, PressableProps } from 'react-native'
+import { Text, Pressable, PressableProps } from 'react-native'
 import React from 'react'
 
 interface Props extends PressableProps {
