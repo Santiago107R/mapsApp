@@ -1,20 +1,35 @@
-import React from 'react';
-import { View } from 'react-native';
-import MapView from 'react-native-maps';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
+import CustomMap from '../../presentation/components/map/CustomMap';
+import { useLocationStore } from '@/presentation/store/useLocationStore';
 
 const MapScreen = () => {
+
+    const {lastKnownLocation, getLocation} = useLocationStore()
+
+    useEffect(() => {
+        if (lastKnownLocation === null) {
+            getLocation();
+        }
+
+    }, [])
+
+    if (lastKnownLocation === null) {
+        return (
+            <View className='flex-1 justify-center, items-center'>
+                <ActivityIndicator />
+            </View>
+        )
+    }
+
     return (
         <View className='flex-1'>
-            <MapView
-                style={{ width: '100%', height: '100%' }}
-                initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
-
+            <CustomMap
+                initalLocation={lastKnownLocation}
+                style={{flex: 1}}
+                showUserLocation
             />
+            
         </View>
     )
 }

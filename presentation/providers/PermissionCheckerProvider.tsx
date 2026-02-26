@@ -1,14 +1,25 @@
 import { PermissionStatus } from '@/infrastucture/interfaces/location'
-import { router } from 'expo-router'
-import React, { useEffect, type PropsWithChildren } from 'react'
+import { router, useNavigationContainerRef } from 'expo-router'
+import React, { useEffect, useState, type PropsWithChildren } from 'react'
 import { AppState } from 'react-native'
 import { usePermissionStore } from '../store/usePermissionsStore'
 
 const PermissionCheckerProvider = ({ children }: PropsWithChildren) => {
 
     const { locationStatus, checkLocationPermission } = usePermissionStore()
+    const navigationRef = useNavigationContainerRef()
+    const [isNavigationReady, setIsNavigationReady] = useState(false)
 
     useEffect(() => {
+        const unsubscribe = navigationRef?.addListener('state', () => {
+            setIsNavigationReady(true)
+        })
+        
+        return unsubscribe
+    }, [navigationRef])
+
+    useEffect(() => {
+        if (!isNavigationReady) return
 
         if (locationStatus === PermissionStatus.GRANTED) {
             router.replace('/map')
@@ -16,7 +27,7 @@ const PermissionCheckerProvider = ({ children }: PropsWithChildren) => {
             router.replace('/permissions')
         }
 
-    }, [locationStatus])
+    }, [locationStatus, isNavigationReady])
 
     useEffect(() => {
         checkLocationPermission()
